@@ -1,0 +1,99 @@
+package project1;
+
+public class ColorConverter {
+		//Add instance variables here
+		
+		Color[][] myColors;
+		
+		public ColorConverter(int rows, int cols, int type, int[] first, int[] second, int[] third)
+		{
+			
+			myColors = new Color[rows][cols];
+			int i=0, j=0, counter=0;
+			//System.out.println(" ROWS= "+rows);
+			//System.out.println(" COLS= "+cols);
+			//System.out.println(" Array length= "+first.length);
+			
+			if(type == 1){
+				counter = 0;
+				for( i=0; i<rows;i++) {
+					
+					for( j=0;j<cols;j++) {
+						Color c = new Color(1, first[counter],second[counter],third[counter]);
+						myColors[i][j]=c;
+						//System.out.println(" Cntr= "+counter);
+
+						counter++;
+						
+					}
+				}
+				
+			}else if(type == 2){
+
+				counter = 0;
+				for( i=0; i<rows;i++) {
+					
+					for( j=0;j<cols;j++) {
+						Color c = new Color(2, first[counter],second[counter],third[counter]);
+						myColors[i][j]=c;
+						//System.out.println(" Cntr= "+counter);
+
+						counter++;
+					}
+				}
+				
+			}
+
+
+		}
+		
+		public Color[][] RGBtoHSV() {
+			
+			Color[][] values = new Color[myColors.length][myColors[0].length];
+			
+			for(int i=0; i<myColors.length;i++) {
+				for(int j=0; j<myColors[i].length;j++) {
+					
+					myColors[i][j].RGBtoHSV();
+					Color newColor = myColors[i][j];
+					//values[i][j] = new Color(1, newColor.getRed(), newColor.getGreen(), newColor.getBlue());
+					values[i][j] = newColor;
+
+				}
+			}
+			
+			return values;
+		}
+		
+		public Color[][] HSVtoRGB() {
+			
+			Color[][] values = new Color[myColors.length][myColors[0].length];
+			
+			for(int i=0; i<myColors.length;i++) {
+				for(int j=0; j<myColors[i].length;j++) {
+					
+					Color newColor = myColors[i][j];
+					newColor.HSVtoRGB();
+					//values[i][j] = new Color(1, newColor.getRed(), newColor.getGreen(), newColor.getBlue());
+					values[i][j] = newColor;
+
+				}
+			}
+			
+			return values;
+		}
+		
+		public void print() {
+			
+			for(int i=0; i<myColors.length;i++) {
+				for(int j=0; j<myColors[i].length;j++) {
+					
+					Color newColor = myColors[i][j];
+					newColor.printColor();
+
+				}
+			}
+			
+		}
+
+}
