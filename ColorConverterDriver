@@ -7,11 +7,21 @@ public class ColorConverterDriver {
 	
 		public static void testRandomRGB() {
 			
-			int[] reds = {0, 255, 0, 0, 192, 128, 0, 0, 255, 0, 255, 255, 128, 128, 128, 0};
-			int[] greens = {0, 0, 0, 255, 192, 0, 128, 128, 255, 255, 255, 0, 128, 128, 0, 0};
-			int[] blues = {0, 0, 255, 255, 192, 0, 0, 128, 255, 0, 0, 255, 128, 0, 0, 128};
-			
-			ColorConverter cc = new ColorConverter(8,2,1,reds,greens,blues);
+//			int[] reds = {0, 255, 0, 0, 192, 128, 0, 0, 255, 0, 255, 255, 128, 128, 128, 0};
+//			int[] greens = {0, 0, 0, 255, 192, 0, 128, 128, 255, 255, 255, 0, 128, 128, 0, 0};
+//			int[] blues = {0, 0, 255, 255, 192, 0, 0, 128, 255, 0, 0, 255, 128, 0, 0, 128};
+
+			int rows = 8;
+			int cols = 2;
+			int[] reds = new int[rows*cols];
+			int[] greens = new int[rows*cols];
+			int[] blues = new int[rows*cols];
+			for (int i=0; i<rows*cols; i++) {
+				reds[i] = (int) (Math.random() * 255);
+				greens[i] = (int) (Math.random() * 255);
+				blues[i] = (int) (Math.random() * 255);
+			}
+			ColorConverter cc = new ColorConverter(rows,cols,1,reds,greens,blues);
 			Color[][] test = cc.RGBtoHSV();
 			cc.print();
 			//test[i][j].printColor();
