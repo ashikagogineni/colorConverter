@@ -1,0 +1,43 @@
+package project1;
+
+public class ColorConverterDriver {
+
+	
+	
+	
+		public static void testRandomRGB() {
+			
+			int[] reds = {0, 255, 0, 0, 192, 128, 0, 0, 255, 0, 255, 255, 128, 128, 128, 0};
+			int[] greens = {0, 0, 0, 255, 192, 0, 128, 128, 255, 255, 255, 0, 128, 128, 0, 0};
+			int[] blues = {0, 0, 255, 255, 192, 0, 0, 128, 255, 0, 0, 255, 128, 0, 0, 128};
+			
+			ColorConverter cc = new ColorConverter(8,2,1,reds,greens,blues);
+			Color[][] test = cc.RGBtoHSV();
+			cc.print();
+			//test[i][j].printColor();
+			
+		}
+
+		public static void testRandomHSV() {
+			int[] hs = {0, 0, 240, 180, 0, 0, 120, 180, 0, 120, 60, 300, 0, 60, 0, 240 };
+			int[] ss = {0, 100, 100, 100, 0, 100, 100, 100, 0, 100, 100, 100, 0, 100, 100, 100};
+			int[] vs = {0, 100, 100, 100, 75, 50, 50, 50, 100, 100, 100, 100, 50, 50, 50, 50};
+			
+			ColorConverter cc = new ColorConverter(8,2,2,hs,ss,vs);
+			Color[][] test = cc.HSVtoRGB();
+			cc.print();
+			//test[i][j].printColor();
+			
+			
+		}
+		
+		public static void main(String[] args) {
+			System.out.println(">>RGBTOHSV>>>");
+			testRandomRGB();
+			System.out.println("");
+			System.out.println(">>HSVTORGB>>>");
+			testRandomHSV();
+
+		}
+
+	}
