@@ -1,4 +1,5 @@
 /**
+ * Author: Ashika Gogineni
  * The Color class represents a color with RGB or HSV components.
  * This class provides methods to manipulate and convert between RGB and HSV color spaces.
  */
