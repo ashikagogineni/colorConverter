@@ -1,4 +1,5 @@
 /**
+ * Author: Arshia Gupta
  * The ColorConverter class converts colors between RGB and HSV color spaces.
  */
 public class ColorConverter {
