@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 /**
  * Author: Arshia Gupta (entire class)
- * The ColorConverterDriver class serves as the entry point for the Color Converter application.
  * It reads input from the user, performs color space conversions, and displays the result.
  */
 public class ColorConverterDriver extends JPanel {
