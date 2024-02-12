@@ -18,7 +18,6 @@ import javax.swing.JPanel;
 public class ColorConverterDriver extends JPanel {
 
 
-
     private Color[][] colors; // To hold the colors read from the file
 
     private static int rows, cols, type;
@@ -27,9 +26,11 @@ public class ColorConverterDriver extends JPanel {
 
     public static ColorConverter myCConvert;
     
+    
     public ColorConverterDriver(Color[][] cArr){
     	colors = cArr;
     }
+    
     
  // Method to paint rectangles based on colors array
     public void paintComponent(Graphics g) {
@@ -51,30 +52,16 @@ public class ColorConverterDriver extends JPanel {
     public static void main(String[] args) {
 
     	
-
-    	String userChoice;
-
     	Scanner scan = new Scanner(System.in);
 
-    	
-
-    	System.out.println("Number of rows of colors?");
-
+    	System.out.println("Enter # of rows: ");
     	rows = scan.nextInt();
-
-    	System.out.println("Number of columns of colors?");
-
+    	System.out.println("Enter # of columns: ");
     	cols = scan.nextInt();
 
-    	
-
     	first = new int[rows*cols];
-
     	second = new int[rows*cols];
-
     	third = new int[rows*cols];
-
-    	
 
     	System.out.println("Enter 1 for Type 1 to convert from RBG to HSV. "
 
@@ -83,9 +70,7 @@ public class ColorConverterDriver extends JPanel {
     	
 
     	type = scan.nextInt();
-
     	System.out.println("Enter the filename: ");
-
 		String fileName = scan.next();
 
     	if(type==2) {
@@ -95,7 +80,6 @@ public class ColorConverterDriver extends JPanel {
     			Scanner fscan = new Scanner(new File(fileName));
 
     			for(int i = 0; i < rows*cols; i++) {
-
     				if(fscan.hasNext()) {
 
     					int nextVal = fscan.nextInt();
@@ -106,70 +90,43 @@ public class ColorConverterDriver extends JPanel {
 
     					else {
 
-    						System.out.println("Invalid hue value, replacing it with 0");
-
+    						System.out.println("Invalid hue: set to 0");
     						first[i] = 0;
-
     					}
 
-    					
-
     				}
-
     			}
 
     			for(int i = 0; i < rows*cols; i ++) {
 
     				if(fscan.hasNext()){
-
     					int nextVal = fscan.nextInt();
-
     					if(nextVal >=0 && nextVal <= 100)
-
     						second[i] = nextVal;
-
     					else {
-
-    						System.out.println("Invalid saturation value, replacing it with 0");
-
+    						System.out.println("Invalid saturation: set to 0");
     						second[i] = 0;
-
-    					
-
     					}
-
     				}
-
     			}
 
     			for(int i = 0; i < rows*cols; i ++) {
 
     				if(fscan.hasNext()){
-
     					int nextVal = fscan.nextInt();
-
     					if(nextVal >=0 && nextVal <= 100)
-
     						third[i] = nextVal;
-
     					else {
 
-    						System.out.println("Invalid brightness value, replacing it with 0");
-
+    						System.out.println("Invalid brightness: set to 0");
     						third[i] = 0;
-
-    					
-
     				}
-
     			}
-
     	}
 
     } catch (FileNotFoundException e) {
 
     	System.out.println("Error in reading file. Try again.");
-
     }
 
 }
@@ -281,6 +238,8 @@ public class ColorConverterDriver extends JPanel {
     }
 
     colorConvert.print();
+    
+    
 
     // Create an instance of ColorConverterDriver and pass colors to its constructor
     ColorConverterDriver driver = new ColorConverterDriver(colorArr);
@@ -291,6 +250,7 @@ public class ColorConverterDriver extends JPanel {
     frame.setSize(260, 280);
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
+    
 
 }
     
