@@ -1,99 +1,90 @@
-package project1;
-
+/**
+ * The ColorConverter class converts colors between RGB and HSV color spaces.
+ */
 public class ColorConverter {
-		//Add instance variables here
-		
-		Color[][] myColors;
-		
-		public ColorConverter(int rows, int cols, int type, int[] first, int[] second, int[] third)
-		{
-			
-			myColors = new Color[rows][cols];
-			int i=0, j=0, counter=0;
-			//System.out.println(" ROWS= "+rows);
-			//System.out.println(" COLS= "+cols);
-			//System.out.println(" Array length= "+first.length);
-			
-			if(type == 1){
-				counter = 0;
-				for( i=0; i<rows;i++) {
-					
-					for( j=0;j<cols;j++) {
-						Color c = new Color(1, first[counter],second[counter],third[counter]);
-						myColors[i][j]=c;
-						//System.out.println(" Cntr= "+counter);
+    // Instance variables
+    private Color[][] myColors; // 2D array to hold colors
 
-						counter++;
-						
-					}
-				}
-				
-			}else if(type == 2){
+    /**
+     * Constructs a ColorConverter object with the given parameters.
+     *
+     * @param rows   The number of rows in the color grid.
+     * @param cols   The number of columns in the color grid.
+     * @param type   The type of color space conversion: 1 for RGB to HSV, 2 for HSV to RGB.
+     * @param first  An array containing the first component of each color.
+     * @param second An array containing the second component of each color.
+     * @param third  An array containing the third component of each color.
+     */
+    public ColorConverter(int rows, int cols, int type, int[] first, int[] second, int[] third) {
+        // Initialize the color grid
+        myColors = new Color[rows][cols];
+        int counter = 0;
+        // Populate the color grid based on the type of conversion
+        if (type == 1) {
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    Color c = new Color(1, first[counter], second[counter], third[counter]);
+                    myColors[i][j] = c;
+                    counter++;
+                }
+            }
+        } else if (type == 2) {
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    Color c = new Color(2, first[counter], second[counter], third[counter]);
+                    myColors[i][j] = c;
+                    counter++;
+                }
+            }
+        }
+    }
 
-				counter = 0;
-				for( i=0; i<rows;i++) {
-					
-					for( j=0;j<cols;j++) {
-						Color c = new Color(2, first[counter],second[counter],third[counter]);
-						myColors[i][j]=c;
-						//System.out.println(" Cntr= "+counter);
+    /**
+     * Converts colors from RGB to HSV color space.
+     *
+     * @return A 2D array of Color objects representing colors in HSV color space.
+     */
+    public Color[][] RGBtoHSV() {
+        Color[][] values = new Color[myColors.length][myColors[0].length];
+        // Convert each color from RGB to HSV
+        for (int i = 0; i < myColors.length; i++) {
+            for (int j = 0; j < myColors[i].length; j++) {
+                myColors[i][j].RGBtoHSV();
+                Color newColor = myColors[i][j];
+                values[i][j] = newColor;
+            }
+        }
+        return values;
+    }
 
-						counter++;
-					}
-				}
-				
-			}
+    /**
+     * Converts colors from HSV to RGB color space.
+     *
+     * @return A 2D array of Color objects representing colors in RGB color space.
+     */
+    public Color[][] HSVtoRGB() {
+        Color[][] values = new Color[myColors.length][myColors[0].length];
+        // Convert each color from HSV to RGB
+        for (int i = 0; i < myColors.length; i++) {
+            for (int j = 0; j < myColors[i].length; j++) {
+                Color newColor = myColors[i][j];
+                newColor.HSVtoRGB();
+                values[i][j] = newColor;
+            }
+        }
+        return values;
+    }
 
-
-		}
-		
-		public Color[][] RGBtoHSV() {
-			
-			Color[][] values = new Color[myColors.length][myColors[0].length];
-			
-			for(int i=0; i<myColors.length;i++) {
-				for(int j=0; j<myColors[i].length;j++) {
-					
-					myColors[i][j].RGBtoHSV();
-					Color newColor = myColors[i][j];
-					//values[i][j] = new Color(1, newColor.getRed(), newColor.getGreen(), newColor.getBlue());
-					values[i][j] = newColor;
-
-				}
-			}
-			
-			return values;
-		}
-		
-		public Color[][] HSVtoRGB() {
-			
-			Color[][] values = new Color[myColors.length][myColors[0].length];
-			
-			for(int i=0; i<myColors.length;i++) {
-				for(int j=0; j<myColors[i].length;j++) {
-					
-					Color newColor = myColors[i][j];
-					newColor.HSVtoRGB();
-					//values[i][j] = new Color(1, newColor.getRed(), newColor.getGreen(), newColor.getBlue());
-					values[i][j] = newColor;
-
-				}
-			}
-			
-			return values;
-		}
-		
-		public void print() {
-			
-			for(int i=0; i<myColors.length;i++) {
-				for(int j=0; j<myColors[i].length;j++) {
-					
-					Color newColor = myColors[i][j];
-					newColor.printColor();
-
-				}
-			}
-			
-		}
-
+    /**
+     * Prints the RGB and HSV components of each color in the color grid.
+     */
+    public void print() {
+        // Print RGB and HSV components for each color
+        for (int i = 0; i < myColors.length; i++) {
+            for (int j = 0; j < myColors[i].length; j++) {
+                Color newColor = myColors[i][j];
+                newColor.printColor();
+            }
+        }
+    }
 }
