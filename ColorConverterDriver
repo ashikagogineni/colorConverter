@@ -1,63 +1,298 @@
 package project1;
 
-public class ColorConverterDriver {
+import java.io.*;
 
-	
-	
-	
-		public static void testRandomRGB() {
-			
-//			int[] reds = {0, 255, 0, 0, 192, 128, 0, 0, 255, 0, 255, 255, 128, 128, 128, 0};
-//			int[] greens = {0, 0, 0, 255, 192, 0, 128, 128, 255, 255, 255, 0, 128, 128, 0, 0};
-//			int[] blues = {0, 0, 255, 255, 192, 0, 0, 128, 255, 0, 0, 255, 128, 0, 0, 128};
+import java.util.Scanner;
+import java.io.FileNotFoundException;
 
-			int rows = 8;
-			int cols = 2;
-			int[] reds = new int[rows*cols];
-			int[] greens = new int[rows*cols];
-			int[] blues = new int[rows*cols];
-			for (int i=0; i<rows*cols; i++) {
-				reds[i] = (int) (Math.random() * 256);
-				greens[i] = (int) (Math.random() * 256);
-				blues[i] = (int) (Math.random() * 256);
-			}
-			ColorConverter cc = new ColorConverter(rows,cols,1,reds,greens,blues);
-			Color[][] test = cc.RGBtoHSV();
-			cc.print();
-			//test[i][j].printColor();
-			
-		}
+//import java.awt.Color;
 
-		public static void testRandomHSV() {
-			int rows = 8;
-			int cols = 2;
-			int[] hs = new int[rows*cols];
-			int[] ss = new int[rows*cols];
-			int[] vs = new int[rows*cols];
-			for (int i=0; i<rows*cols; i++) {
-				hs[i] = (int) (Math.random() * 361);
-				ss[i] = (int) (Math.random() * 101);
-				vs[i] = (int) (Math.random() * 301);
-			}
-		//	int[] hs = {0, 0, 240, 180, 0, 0, 120, 180, 0, 120, 60, 300, 0, 60, 0, 240 };
-		//	int[] ss = {0, 100, 100, 100, 0, 100, 100, 100, 0, 100, 100, 100, 0, 100, 100, 100};
-		//	int[] vs = {0, 100, 100, 100, 75, 50, 50, 50, 100, 100, 100, 100, 50, 50, 50, 50};
-			
-			ColorConverter cc = new ColorConverter(8,2,2,hs,ss,vs);
-			Color[][] test = cc.HSVtoRGB();
-			cc.print();
-			//test[i][j].printColor();
-			
-			
-		}
-		
-		public static void main(String[] args) {
-			System.out.println(">>RGBTOHSV>>>");
-			testRandomRGB();
-			System.out.println("");
-			System.out.println(">>HSVTORGB>>>");
-			testRandomHSV();
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
-		}
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-	}
+
+
+public class ColorConverterDriver extends JPanel {
+
+
+
+    private Color[][] colors; // To hold the colors read from the file
+
+    private static int rows, cols, type;
+
+    private static int[] first, second, third;
+
+    public static ColorConverter myCConvert;
+    
+    public ColorConverterDriver(Color[][] cArr){
+    	colors = cArr;
+    }
+    
+ // Method to paint rectangles based on colors array
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+
+        for (int i = 0; i < colors.length; i++) {
+            for (int j = 0; j < colors[i].length; j++) {
+                Color cc = colors[i][j];
+                g2d.setColor(new java.awt.Color(cc.getRed(), cc.getGreen(), cc.getBlue()));
+                //g2d.drawRect(((250 / rows) * j), (250 / cols * i), 250 / cols, 250 / rows);
+                //g2d.fillRect(((250 / rows) * i), (250 / cols * j), 250 / cols, 250 / rows);
+                g2d.fillRect(j * 50, i * 50, 50, 50);
+
+            }
+        }
+    }   
+
+    public static void main(String[] args) {
+
+    	
+
+    	String userChoice;
+
+    	Scanner scan = new Scanner(System.in);
+
+    	
+
+    	System.out.println("Number of rows of colors?");
+
+    	rows = scan.nextInt();
+
+    	System.out.println("Number of columns of colors?");
+
+    	cols = scan.nextInt();
+
+    	
+
+    	first = new int[rows*cols];
+
+    	second = new int[rows*cols];
+
+    	third = new int[rows*cols];
+
+    	
+
+    	System.out.println("Enter 1 for Type 1 to convert from RBG to HSV. "
+
+    			+ "Enter 2 for Type 2 to convert from HSV to RGB");
+
+    	
+
+    	type = scan.nextInt();
+
+    	System.out.println("Enter the filename: ");
+
+		String fileName = scan.next();
+
+    	if(type==2) {
+
+    		try {
+
+    			Scanner fscan = new Scanner(new File(fileName));
+
+    			for(int i = 0; i < rows*cols; i++) {
+
+    				if(fscan.hasNext()) {
+
+    					int nextVal = fscan.nextInt();
+
+    					if(nextVal >=0 && nextVal <= 360)
+
+    						first[i] = nextVal;
+
+    					else {
+
+    						System.out.println("Invalid hue value, replacing it with 0");
+
+    						first[i] = 0;
+
+    					}
+
+    					
+
+    				}
+
+    			}
+
+    			for(int i = 0; i < rows*cols; i ++) {
+
+    				if(fscan.hasNext()){
+
+    					int nextVal = fscan.nextInt();
+
+    					if(nextVal >=0 && nextVal <= 100)
+
+    						second[i] = nextVal;
+
+    					else {
+
+    						System.out.println("Invalid saturation value, replacing it with 0");
+
+    						second[i] = 0;
+
+    					
+
+    					}
+
+    				}
+
+    			}
+
+    			for(int i = 0; i < rows*cols; i ++) {
+
+    				if(fscan.hasNext()){
+
+    					int nextVal = fscan.nextInt();
+
+    					if(nextVal >=0 && nextVal <= 100)
+
+    						third[i] = nextVal;
+
+    					else {
+
+    						System.out.println("Invalid brightness value, replacing it with 0");
+
+    						third[i] = 0;
+
+    					
+
+    				}
+
+    			}
+
+    	}
+
+    } catch (FileNotFoundException e) {
+
+    	System.out.println("Error in reading file. Try again.");
+
+    }
+
+}
+
+    if(type==1) {
+
+    		try {
+
+    			Scanner fscan = new Scanner(new File(fileName));
+
+    			for(int i = 0; i < rows*cols; i++) {
+
+    				if(fscan.hasNext()) {
+
+    					int nextVal = fscan.nextInt();
+
+    					if(nextVal >=0 && nextVal <= 255)
+
+    						first[i] = nextVal;
+
+    					else {
+
+    						System.out.println("Invalid red value, replacing it with 0");
+
+    						first[i] = 0;
+
+    					}
+
+    					
+
+    				}
+
+    			}
+
+    			for(int i = 0; i < rows*cols; i ++) {
+
+    				if(fscan.hasNext()){
+
+    					int nextVal = fscan.nextInt();
+
+    					if(nextVal >=0 && nextVal <= 255)
+
+    						second[i] = nextVal;
+
+    					else {
+
+    						System.out.println("Invalid green value, replacing it with 0");
+
+    						second[i] = 0;
+
+    					
+
+    					}
+
+    				}
+
+    			}
+
+    			for(int i = 0; i < rows*cols; i ++) {
+
+    				if(fscan.hasNext()){
+
+    					int nextVal = fscan.nextInt();
+
+    					if(nextVal >=0 && nextVal <= 255)
+
+    						third[i] = nextVal;
+
+    					else {
+
+    						System.out.println("Invalid blue value, replacing it with 0");
+
+    						third[i] = 0;
+
+    					
+
+    				}
+
+    			}
+
+    	}
+
+    } catch (FileNotFoundException e) {
+
+    	System.out.println("Error in reading file. Try again.");
+
+    }
+
+    }
+
+    ColorConverter colorConvert = new ColorConverter(rows, cols, type, first, second, third);
+
+    Color[][] colorArr = new Color[rows][cols];
+
+    if (type == 1) {
+
+    	colorArr = colorConvert.RGBtoHSV();
+
+    	System.out.println("Converted RGB to HSV: ");
+
+    } else if(type == 2) {
+
+    	colorArr = colorConvert.HSVtoRGB();
+
+    	System.out.println("Converted HSV to RGB: ");
+
+    	
+
+    }
+
+    colorConvert.print();
+
+    // Create an instance of ColorConverterDriver and pass colors to its constructor
+    ColorConverterDriver driver = new ColorConverterDriver(colorArr);
+
+    JFrame frame = new JFrame("Color Converter");
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.add(driver); // Add ColorConverterDriver instance to the frame
+    frame.setSize(260, 280);
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+
+}
+    
+
+}
