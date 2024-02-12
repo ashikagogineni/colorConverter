@@ -1,262 +1,341 @@
-package project1;
-
+/**
+ * The Color class represents a color with RGB or HSV components.
+ * This class provides methods to manipulate and convert between RGB and HSV color spaces.
+ */
 public class Color {
-		//Add your instance variables here
-		public static final int MAX_COLOR = 255;
-		int R, G, B, H, S, V; 
-		
-		public Color(int type, int a, int b, int c) {
-			if (type == 1) {
-				R = a; 
-				G = b; 
-				B = c;
-				
-			}else {
-				H = a; 
-				S = b; 
-				V = c;
-			}
-			
+    /**
+     * The maximum value for a color component.
+     */
+    public static final int MAX_COLOR = 255;
 
+    // RGB components
+    private int R;
+    private int G;
+    private int B;
 
+    // HSV components
+    private int H;
+    private int S;
+    private int V;
 
-		}
-		public void setRGB(int r, int g, int b) {
-			R = r; 
-			G = g; 
-			B = b; 
-		}
-		
-		public void setHSV(int h, int s, int b) {
-			H = h; 
-			S = s; 
-			V = b; 
+    /**
+     * Constructs a Color object with the given components.
+     *
+     * @param type The type of color space: 1 for RGB, 2 for HSV.
+     * @param a    The first component (R if type=1, H if type=2).
+     * @param b    The second component (G if type=1, S if type=2).
+     * @param c    The third component (B if type=1, V if type=2).
+     */
+    public Color(int type, int a, int b, int c) {
+        if (type == 1) {
+            R = a;
+            G = b;
+            B = c;
+        } else {
+            H = a;
+            S = b;
+            V = c;
+        }
+    }
 
+    // Methods for setting individual components
 
-		}
-		public void setRed(int r) {
-			R = r; 
+    /**
+     * Sets the RGB components of the color.
+     *
+     * @param r The red component.
+     * @param g The green component.
+     * @param b The blue component.
+     */
+    public void setRGB(int r, int g, int b) {
+        R = r;
+        G = g;
+        B = b;
+    }
 
+    /**
+     * Sets the HSV components of the color.
+     *
+     * @param h The hue component.
+     * @param s The saturation component.
+     * @param v The brightness component.
+     */
+    public void setHSV(int h, int s, int v) {
+        H = h;
+        S = s;
+        V = v;
+    }
 
-		}
-		public void setGreen(int g) {
-			G = g; 
+    // Methods for getting individual components
 
+    /**
+     * Returns the red component of the color.
+     *
+     * @return The red component.
+     */
+    public int getRed() {
+        return R;
+    }
 
-		}
-		public void setBlue(int b) {
-			B = b; 
+    /**
+     * Returns the green component of the color.
+     *
+     * @return The green component.
+     */
+    public int getGreen() {
+        return G;
+    }
 
+    /**
+     * Returns the blue component of the color.
+     *
+     * @return The blue component.
+     */
+    public int getBlue() {
+        return B;
+    }
 
-		}
-		public void setHue(int h) {
-			H = h; 
+    /**
+     * Returns the hue component of the color.
+     *
+     * @return The hue component.
+     */
+    public int getHue() {
+        return H;
+    }
 
+    /**
+     * Returns the saturation component of the color.
+     *
+     * @return The saturation component.
+     */
+    public int getSaturation() {
+        return S;
+    }
 
-		}
-		public void setSaturation(int s) {
-			S = s; 
+    /**
+     * Returns the brightness component of the color.
+     *
+     * @return The brightness component.
+     */
+    public int getBrightness() {
+        return V;
+    }
 
+    // Methods for getting all components
 
-		}
-		public void setBrightness(int b) {
-			V = b; 
+    /**
+     * Returns an array containing the RGB components of the color.
+     *
+     * @return An array containing the red, green, and blue components.
+     */
+    public int[] getRGB() {
+        int[] values = {R, G, B};
+        return values;
+    }
 
+    /**
+     * Returns an array containing the HSV components of the color.
+     *
+     * @return An array containing the hue, saturation, and brightness components.
+     */
+    public int[] getHSV() {
+        int[] values = {H, S, V};
+        return values;
+    }
 
-		}
-		public int getRed() {
-			return R; 
+    // Utility methods
 
+    /**
+     * Returns the maximum of three values.
+     *
+     * @param one   The first value.
+     * @param two   The second value.
+     * @param three The third value.
+     * @return The maximum value.
+     */
+    private double getMaximum(double one, double two, double three) {
+        double max = one;
+        if (two > max) {
+            max = two;
+        }
 
-		}
-		public int getBlue() {
-			return B; 
+        if (three > max) {
+            max = three;
+        }
 
+        return max;
+    }
 
-		}
-		public int getGreen() {
-			return G; 
+    /**
+     * Returns the minimum of three values.
+     *
+     * @param one   The first value.
+     * @param two   The second value.
+     * @param three The third value.
+     * @return The minimum value.
+     */
+    private double getMinimum(double one, double two, double three) {
+        double min = one;
+        if (two < min) {
+            min = two;
+        }
 
-		}
-		public int getHue() {
-			return H; 
+        if (three < min) {
+            min = three;
+        }
 
+        return min;
+    }
 
-		}
-		public int getSaturation() {
-			return S; 
+    /**
+     * Calculates the hue component from RGB components.
+     *
+     * @param r   The red component.
+     * @param g   The green component.
+     * @param b   The blue component.
+     * @param max The maximum value among the RGB components.
+     * @param min The minimum value among the RGB components.
+     */
+    private void calculateHue(double r, double g, double b, double max, double min) {
+        double delta = max - min;
 
+        if (delta == 0) {
+            H = 0;
+        }
+        if (max == r) {
+            H = (int) (60 * ((g - b) / delta % 6));
+        }
+        if (max == g) {
+            H = (int) (60 * ((b - r) / delta + 2));
+        }
+        if (max == b) {
+            H = (int) (60 * ((r - g) / delta + 4));
+        }
+    }
 
-		}
-		public int getBrightness() {
-			return V; 
+    /**
+     * Calculates the saturation component from RGB components.
+     *
+     * @param r   The red component.
+     * @param g   The green component.
+     * @param b   The blue component.
+     * @param max The maximum value among the RGB components.
+     * @param min The minimum value among the RGB components.
+     */
+    private void calculateSaturation(double r, double g, double b, double max, double min) {
+        double delta = max - min;
 
+        if (max == 0) {
+            S = 0;
+        }
+        if (max != 0) {
+            S = (int) (delta / max);
+            S = S * 100;
+        }
+    }
 
-		}
-		public int[] getRGB() {			
-			int[] values = {R,G,B};
-			return values;
+    /**
+     * Calculates the brightness component from RGB components.
+     *
+     * @param r   The red component.
+     * @param g   The green component.
+     * @param b   The blue component.
+     * @param max The maximum value among the RGB components.
+     * @param min The minimum value among the RGB components.
+     */
+    private void calculateBrightness(double r, double g, double b, double max, double min) {
+        V = (int) (max * 100);
+    }
 
-		}
-		public int[] getHSV() {			
-			int[] values = {H,S,V};
-			return values;
+    /**
+     * Converts RGB color space to HSV color space.
+     * Updates the HSV components of the color.
+     */
+    public void RGBtoHSV() {
+        double Ri = R / 255.0;
+        double Gi = G / 255.0;
+        double Bi = B / 255.0;
+        double max = getMaximum(Ri, Gi, Bi);
+        double min = getMinimum(Ri, Gi, Bi);
+        calculateHue(Ri, Gi, Bi, max, min);
+        calculateSaturation(Ri, Gi, Bi, max, min);
+        calculateBrightness(Ri, Gi, Bi, max, min);
+    }
 
-		}
-		
-		private double getMaximum(double one, double two, double three) {
-			double max = one;
-	        if (two > max) {
-	            max = two;
-	        }
-	 
-	        if (three > max) {
-	            max = three;
-	        }
-	 
-	        return max;
-				
-		}
+    /**
+     * Converts HSV color space to RGB color space.
+     * Updates the RGB components of the color.
+     */
+    public void HSVtoRGB() {
+        int c = 0, x = 0, m = 0;
+        int tempR = 0, tempG = 0, tempB = 0;
+        c = V * S;
+        x = c * (1 - Math.abs(((H / 60) % 2) - 1));
+        m = V - c;
 
+        if (H >= 300 && H < 360) {
+            tempR = c;
+            tempG = 0;
+            tempB = x;
+        } else if (H >= 240 && H < 300) {
+            tempR = x;
+            tempG = 0;
+            tempB = c;
+        } else if (H >= 180 && H < 240) {
+            tempR = 0;
+            tempG = x;
+            tempB = c;
+        } else if (H >= 120 && H < 180) {
+            tempR = 0;
+            tempG = c;
+            tempB = x;
+        } else if (H >= 60 && H < 120) {
+            tempR = x;
+            tempG = c;
+            tempB = 0;
+        } else if (H >= 0 && H < 60) {
+            tempR = c;
+            tempG = x;
+            tempB = 0;
+        }
 
-		private double getMinimum(double one, double two, double three) {
-			double min = one;
-	        if (two < min) {
-	            min = two;
-	        }
-	 
-	        if (three < min) {
-	            min = three;
-	        }
-	 
-	        return min;
+        R = (tempR + m) * 255 / 100;
+        G = (tempG + m) * 255 / 100;
+        B = (tempB + m) * 255 / 100;
 
+        if (R >= 255) {
+            R = 255;
+        } else if (R <= 0) {
+            R = 0;
+        } else {
+            R = (int) (R + 1.0);
+        }
 
-		}
-		private void calculateHue(double r, double g, double b, double max, double min) {
-			double delta = max - min; 
-			
-			if (delta == 0) {
-				H = 0; 
-			}
-			if (max == r) {
-				H = (int) (60 * ((g-b)/delta %6)); 
-			}
-			if (max == g) {
-				H = (int) (60 * ((b-r)/delta +2)); 
-			}
-			if (max == b) {
-				H = (int) (60 * ((r-g)/delta +4)); 
-			}
+        if (G >= 255) {
+            G = 255;
+        } else if (G <= 0) {
+            G = 0;
+        } else {
+            G = (int) (G + 1.0);
+        }
 
+        if (B >= 255) {
+            B = 255;
+        } else if (B <= 0) {
+            B = 0;
+        } else {
+            B = (int) (B + 1.0);
+        }
+    }
 
-		}
-		private void calculateSaturation(double r, double g, double b, double max, double min) {
-			double delta = (max - min); 
-			
-			if (max == 0) {
-				S = 0;
-			}
-			if (max != 0) {
-				S = (int) (delta/max);
-				S = S * 100;
-			}
-
-
-		}
-		
-		private void calculateBrightness(double r, double g, double b, double max, double min) {
-			V = (int) (max *100); 
-		}
-		
-		public void RGBtoHSV() {
-			double Ri = R/255.0;
-			double Gi = G/255.0;
-			double Bi = B/255.0;
-			double max = getMaximum(Ri,Gi,Bi);
-			double min = getMinimum(Ri,Gi,Bi);
-			calculateHue(Ri,Gi,Bi,max,min);
-			calculateSaturation(Ri,Gi,Bi,max,min);
-			calculateBrightness(Ri,Gi,Bi,max,min);
-
-		}
-		
-		public void HSVtoRGB() {
-			int c=0,x=0,m=0;
-			int tempR=0, tempG=0, tempB=0;
-				c = V * S;
-				x = c * (1- Math.abs( ((H/60)%2) -1));
-				m = V - c;
-			
-				if(H>=300 && H<360) {
-					tempR = c;
-					tempG = 0;
-					tempB = x;
-				}
-				else if(H>=240 && H<300) {
-					tempR = x;
-					tempG = 0;
-					tempB = c;
-				}
-				else if(H>=180 && H<240) {
-					tempR = 0;
-					tempG = x;
-					tempB = c;
-				}
-				else if(H>=120 && H<180) {
-					tempR = 0;
-					tempG = c;
-					tempB = x;
-				}
-				else if(H>=60 && H<120) {
-					tempR = x;
-					tempG = c;
-					tempB = 0;
-				}
-				else if(H>=0 && H<60) {
-					tempR = c;
-					tempG = x;
-					tempB = 0;
-				}
-
-				R = (tempR+m)*255/100;
-				G = (tempG+m)*255/100;
-				B = (tempB+m)*255/100;
-				
-				
-				if(R >= 255) {
-					R = 255; 
-				}else if (R <= 0){
-					R = 0; 
-				}else {
-					R = (int)(R + 1.0); 
-				}
-				
-				if(G >= 255) {
-					G = 255; 
-				}else if (G <= 0){
-					G = 0; 
-				}else {
-					G = (int)(G + 1.0); 
-				}
-				
-				if(B >= 255) {
-					B = 255; 
-				}else if (B <= 0){
-					B = 0; 
-				}else {
-					B = (int)(B + 1.0); 
-				}
-			
-			}
-			
-		
-		public void printColor()
-		{
-			char c = 176;
-			System.out.printf("%10s%3d%2s%3d%2s%3d%2s", "\tRGB = (" , R , ", " , G , ", " , B , ")");
-			System.out.printf("%10s%3d%2s%3d%2s%3d%2s", "HSV = (" , H , (""+ c+", ")  , S , "%, " , V , "%)");
-			System.out.println(); //remove later
-		}
-		
-	}
+    /**
+     * Prints the RGB and HSV components of the color.
+     */
+    public void printColor() {
+        char c = 176;
+        System.out.printf("%10s%3d%2s%3d%2s%3d%2s", "\tRGB = (", R, ", ", G, ", ", B, ")");
+        System.out.printf("%10s%3d%2s%3d%2s%3d%2s", "HSV = (", H, ("" + c + ", "), S, "%, ", V, "%)");
+        System.out.println();
+    }
+}
