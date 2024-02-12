@@ -17,9 +17,9 @@ public class ColorConverterDriver {
 			int[] greens = new int[rows*cols];
 			int[] blues = new int[rows*cols];
 			for (int i=0; i<rows*cols; i++) {
-				reds[i] = (int) (Math.random() * 255);
-				greens[i] = (int) (Math.random() * 255);
-				blues[i] = (int) (Math.random() * 255);
+				reds[i] = (int) (Math.random() * 256);
+				greens[i] = (int) (Math.random() * 256);
+				blues[i] = (int) (Math.random() * 256);
 			}
 			ColorConverter cc = new ColorConverter(rows,cols,1,reds,greens,blues);
 			Color[][] test = cc.RGBtoHSV();
@@ -29,6 +29,16 @@ public class ColorConverterDriver {
 		}
 
 		public static void testRandomHSV() {
+			int rows = 8;
+			int cols = 2;
+			int[] hs = new int[rows*cols];
+			int[] ss = new int[rows*cols];
+			int[] vs = new int[rows*cols];
+			for (int i=0; i<rows*cols; i++) {
+				hs[i] = (int) (Math.random() * 361);
+				ss[i] = (int) (Math.random() * 101);
+				vs[i] = (int) (Math.random() * 301);
+			}
 			int[] hs = {0, 0, 240, 180, 0, 0, 120, 180, 0, 120, 60, 300, 0, 60, 0, 240 };
 			int[] ss = {0, 100, 100, 100, 0, 100, 100, 100, 0, 100, 100, 100, 0, 100, 100, 100};
 			int[] vs = {0, 100, 100, 100, 75, 50, 50, 50, 100, 100, 100, 100, 50, 50, 50, 50};
